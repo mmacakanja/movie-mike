@@ -1,0 +1,10 @@
+MOVIE MIKE V4
+- Permanent Neon cache for TMDB movie metadata
+- Permanent Neon cache for OMDb/Metacritic scores
+- Google Sheet can be live source of ratings
+- Owner-only Add Movie moved to bottom; REVIEW_ADMIN_SECRET is a passcode you choose in Vercel
+- Stronger discrete red/yellow/green rating colors
+- Black numerals in rating circles
+- Prominent search near top
+- Newest visitor comments summary near top
+- Mike vs. Critics disagreement section with generated score-based commentary
