@@ -5,9 +5,9 @@
   4. Commit the file in GitHub. Vercel will publish it automatically.
 */
 window.VISITING_COLUMNIST = {
-  published: false,
+  published: true,
   sectionHeadline: "A different seat in the theater",
-  sectionDek: "Occasional guest essays, alternate verdicts and friendly dissent.",
+  sectionDek: "Occasional guest essays, alternate verdicts and (mostly) friendly dissent.",
   author: "Guest name",
   date: "Month Day, Year",
   title: "Column title",
