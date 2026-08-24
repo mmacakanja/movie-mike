@@ -1,0 +1,8 @@
+MOVIE MIKE V5
+- Larger, higher-contrast desktop navigation
+- Genre counts are buttons that open the matching movie list
+- Mike-vs-Metacritic disagreements split into two clearly labeled columns
+- Expanded explanation of the five-category philosophy and the any-category-5 recommendation rule
+- Configurable Visiting Columnist section (columnist.js)
+- Collapsible, compact Owner Tools box at the bottom
+- Removed public-facing database, cache and Google Sheet plumbing copy
