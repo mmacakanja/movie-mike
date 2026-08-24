@@ -12,7 +12,6 @@ window.VISITING_COLUMNIST = {
   date: "Month Day, Year",
   title: "Column title",
   paragraphs: [
-    `First paragraph. Apostrophes work normally here.`,
-    `Second paragraph.`
+    `Stay tuned; first column coming soon!`
   ]
 };
