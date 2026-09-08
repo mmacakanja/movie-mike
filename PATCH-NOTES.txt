@@ -1,6 +1,0 @@
-MOVIE MIKE V6.3
-- Restores clean API routes (/api/tmdb, /api/critic, /api/sheet, /api/comments, /api/critic-summary) when using explicit Vercel builds
-- Fixes metadata disappearing after the Vercel 404 deployment repair
-- Uses an absolute path for the Telluride background photo so the image resolves reliably
-- Removes visitor-facing implementation/process copy from the Telluride section
-- Preserves V6.2 Telluride cards, ratings, Metacritic, click-through dialogs, and all V5 features
