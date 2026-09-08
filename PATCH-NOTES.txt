@@ -1,0 +1,8 @@
+MOVIE MIKE V6.2
+- Telluride section now uses a real Telluride Main Street photo background (included as telluride-main-street.jpg)
+- Telluride hero copy updated with the new Oscar-race sentence
+- Telluride standouts are now rendered dynamically from the normal Movie Mike movie pipeline
+- Featured Telluride cards now attempt to show poster art, Metacritic, and a “View Mike's ratings” button
+- If a featured title exists in your ratings data (bundled data.js or live Google Sheet), clicking the card opens the normal Movie Mike rating dialog
+- Added title alias support for “The Last Living Pickpocket in New York” → “The Only Living Pickpocket in New York”
+- All V6 and V5 functionality preserved
