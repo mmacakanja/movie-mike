@@ -1,7 +1,0 @@
-MOVIE MIKE V6.4
-- Telluride Main Street photo is now an actual image layer in the page rather than only a CSS background reference
-- Telluride photo overlay is lighter so the image is clearly visible
-- Removed the visitor-facing “Pulled from the same critic pipeline...” text
-- Removed the separate “View Mike’s ratings” button
-- The entire Telluride movie card remains clickable and opens the standard Movie Mike rating dialog
-- All V6.3 metadata/API routing fixes preserved
