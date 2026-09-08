@@ -1,0 +1,74 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "app.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "data.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "columnist.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "styles.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "telluride-main-street.jpg",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/tmdb",
+      "dest": "/api/tmdb.js"
+    },
+    {
+      "src": "/api/critic",
+      "dest": "/api/critic.js"
+    },
+    {
+      "src": "/api/critic-summary",
+      "dest": "/api/critic-summary.js"
+    },
+    {
+      "src": "/api/comments",
+      "dest": "/api/comments.js"
+    },
+    {
+      "src": "/api/sheet",
+      "dest": "/api/sheet.js"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/",
+      "dest": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
+  ]
+}
