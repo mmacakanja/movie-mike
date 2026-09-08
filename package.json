@@ -1,0 +1,9 @@
+{
+  "name": "movie-mike-v6-6",
+  "version": "6.6.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.1"
+  }
+}

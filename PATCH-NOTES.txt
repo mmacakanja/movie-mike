@@ -1,0 +1,5 @@
+MOVIE MIKE V6.6
+- Fixed the actual Telluride photo bug: a legacy opaque .telluride-inner background was covering the photo layer.
+- Telluride photo remains embedded in index.html, so no separate asset request is required.
+- Reduced overlay opacity so the Main Street photo is clearly visible while text remains readable.
+- All V6.5 functionality preserved.
