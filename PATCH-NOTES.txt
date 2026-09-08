@@ -1,0 +1,4 @@
+MOVIE MIKE V6.5
+- Telluride Main Street photo is embedded directly in index.html as a data URI
+- No separate image request is required, eliminating the Vercel static-asset problem
+- All V6.4 behavior preserved
