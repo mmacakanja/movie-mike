@@ -1,8 +1,0 @@
-MOVIE MIKE V6
-- New highlighted TELLURIDE FILM FESTIVAL 2026 feature immediately below the hero
-- CSS-generated mountain / night-sky artwork; no new image asset dependency
-- Telluride festival link and festival observations, including the Nathan Fielder / Lance Oppenheim Elizabeth Holmes surprise documentary
-- Six Telluride standouts with current U.S. release information
-- New hero philosophy: “We see movies for five different reasons” / “The parts matter more than the total score…” / “…But the scores do matter”
-- Five individual Method cards explaining Originality / Voice, Degree of Difficulty, Artistry / Cinematography, Emotional Resonance, and Plot / Story / Acting
-- All V5 functionality preserved: clickable genres, split Metacritic comparison, Visiting Columnist, comments, live Sheet bridge, caches, and compact Owner Tools
