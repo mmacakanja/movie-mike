@@ -3,7 +3,10 @@ function clean(s,max=800){return String(s||'').trim().slice(0,max)}
 function escHtml(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 async function sendCommentEmail({title,name,body}){
   const key=process.env.RESEND_API_KEY;
-  if(!key)return {sent:false,reason:'not_configured'};
+  if(!key){
+    console.warn('Movie Mike comment email not sent: RESEND_API_KEY is not configured in this deployment');
+    return {sent:false,reason:'not_configured'};
+  }
   const to=process.env.COMMENT_NOTIFY_EMAIL||'mmacakanja@gmail.com';
   const from=process.env.COMMENT_NOTIFY_FROM||'Movie Mike <onboarding@resend.dev>';
   try{
@@ -16,8 +19,17 @@ async function sendCommentEmail({title,name,body}){
         html:`<h2>New comment on ${escHtml(title)}</h2><p><strong>${escHtml(name)}</strong></p><p>${escHtml(body).replace(/\n/g,'<br>')}</p><p><a href="https://www.mikesmovieratings.com">Open Movie Mike</a></p>`
       })
     });
-    return {sent:r.ok,status:r.status};
-  }catch(e){return {sent:false,reason:'send_failed'};}
+    const responseText=await r.text();
+    if(!r.ok){
+      console.error('Movie Mike Resend email failed',{status:r.status,to,from,response:responseText});
+      return {sent:false,status:r.status,reason:'resend_rejected'};
+    }
+    console.log('Movie Mike comment email sent',{status:r.status,to,title});
+    return {sent:true,status:r.status};
+  }catch(e){
+    console.error('Movie Mike Resend email request failed',{message:e?.message||String(e)});
+    return {sent:false,reason:'send_failed'};
+  }
 }
 export default async function handler(req,res){
   if(!process.env.DATABASE_URL)return res.status(503).json({error:'Comments database is not configured'});
@@ -40,7 +52,7 @@ export default async function handler(req,res){
     if(!title||!name||!body)return res.status(400).json({error:'title, name and comment are required'});
     await sql`INSERT INTO movie_comments(movie_title,display_name,body) VALUES(${title},${name},${body})`;
     const email=await sendCommentEmail({title,name,body});
-    return res.status(201).json({ok:true,emailSent:Boolean(email.sent)});
+    return res.status(201).json({ok:true,emailSent:Boolean(email.sent),emailStatus:email.status||null,emailReason:email.reason||null});
   }
   res.setHeader('Allow','GET, POST'); return res.status(405).end();
 }
