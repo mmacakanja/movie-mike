@@ -2,68 +2,51 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "builds": [
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "app.js",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "data.js",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "columnist.js",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "styles.css",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "api/*.js",
-      "use": "@vercel/node"
-    }
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "app.js", "use": "@vercel/static" },
+    { "src": "app-core.js", "use": "@vercel/static" },
+    { "src": "v7-entry.js", "use": "@vercel/static" },
+    { "src": "v7.js", "use": "@vercel/static" },
+    { "src": "v7.css", "use": "@vercel/static" },
+    { "src": "data.js", "use": "@vercel/static" },
+    { "src": "columnist.js", "use": "@vercel/static" },
+    { "src": "styles.css", "use": "@vercel/static" },
+    { "src": "telluride-main-street.jpg", "use": "@vercel/static" },
+    { "src": "api/*.js", "use": "@vercel/node" }
   ],
   "routes": [
-    {
-      "src": "/api/tmdb",
-      "dest": "/api/tmdb.js"
-    },
-    {
-      "src": "/api/critic",
-      "dest": "/api/critic.js"
-    },
-    {
-      "src": "/api/critic-summary",
-      "dest": "/api/critic-summary.js"
-    },
-    {
-      "src": "/api/comments",
-      "dest": "/api/comments.js"
-    },
-    {
-      "src": "/api/sheet",
-      "dest": "/api/sheet.js"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/",
-      "dest": "/index.html"
-    }
+    { "src": "/api/tmdb", "dest": "/api/tmdb.js" },
+    { "src": "/api/critic", "dest": "/api/critic.js" },
+    { "src": "/api/critic-summary", "dest": "/api/critic-summary.js" },
+    { "src": "/api/comments", "dest": "/api/comments.js" },
+    { "src": "/api/sheet", "dest": "/api/sheet.js" },
+    { "src": "/app.js", "dest": "/v7-entry.js" },
+    { "handle": "filesystem" },
+    { "src": "/", "dest": "/index.html" }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        }
+        { "key": "X-Content-Type-Options", "value": "nosniff" }
+      ]
+    },
+    {
+      "source": "/(index.html|app.js|v7-entry.js|data.js|columnist.js|styles.css)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/(app-core.js|v7.js|v7.css)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/telluride-main-street.jpg",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
       ]
     }
   ]
