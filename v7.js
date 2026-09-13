@@ -4,14 +4,32 @@
   const LOAD_STEP=12;
 
   function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-  function bySourceRow(a,b){return Number(b.sourceRow||0)-Number(a.sourceRow||0);}
+
+  function latestFromRecentGrid(){
+    const grid=document.getElementById('recentGrid');
+    if(!grid)return [];
+    return [...grid.querySelectorAll('[data-title]')].slice(0,3).map(el=>{
+      const title=decodeURIComponent(el.dataset.title||'');
+      return title?{title}:null;
+    }).filter(Boolean);
+  }
+
+  function updateLatestReviews(){
+    const el=document.querySelector('.v7-latest-links');
+    if(!el)return;
+    const latest=latestFromRecentGrid();
+    if(!latest.length){
+      el.innerHTML='<span>Latest ratings are loading…</span>';
+      return;
+    }
+    el.innerHTML=latest.map(m=>`<button type="button" data-v7-title="${encodeURIComponent(m.title)}">${esc(m.title)}</button>`).join('');
+  }
 
   function installWhatsNew(){
     if(document.querySelector('.v7-whats-new'))return;
     const hero=document.querySelector('.hero');
     if(!hero)return;
     const c=window.VISITING_COLUMNIST||{};
-    const latest=(window.MOVIES||[]).slice().sort(bySourceRow).slice(0,3);
     const box=document.createElement('section');
     box.className='v7-whats-new';
     box.innerHTML=`<div class="v7-whats-new-inner">
@@ -25,10 +43,11 @@
       <div class="v7-update-list">
         <h3>Also new</h3>
         <div class="v7-update"><span class="v7-update-label">Telluride 2026</span><a href="#telluride">Festival update and six featured films →</a><p>Mike’s post-festival picks, release dates, ratings and critic scores.</p></div>
-        <div class="v7-update"><span class="v7-update-label">Latest reviews</span><div class="v7-latest-links">${latest.map(m=>`<button type="button" data-v7-title="${encodeURIComponent(m.title)}">${esc(m.title)}</button>`).join('')}</div><p>The most recently added ratings from the live Google Sheet.</p></div>
+        <div class="v7-update"><span class="v7-update-label">Latest reviews</span><div class="v7-latest-links"><span>Latest ratings are loading…</span></div><p>The most recently added ratings from the live Google Sheet.</p></div>
       </div>
     </div>`;
     hero.insertAdjacentElement('afterend',box);
+    updateLatestReviews();
   }
 
   function promoteColumnist(){
@@ -74,7 +93,7 @@
     if(b){openNamedMovie(decodeURIComponent(b.dataset.v7Title));}
   });
 
-  function patchRenderedContent(){removeOriginals();clampAllMovies();}
+  function patchRenderedContent(){removeOriginals();clampAllMovies();updateLatestReviews();}
 
   const observer=new MutationObserver(()=>patchRenderedContent());
   function boot(){
@@ -83,8 +102,10 @@
     patchRenderedContent();
     const collections=document.getElementById('collectionGrid');
     const movies=document.getElementById('movieGrid');
+    const recent=document.getElementById('recentGrid');
     if(collections)observer.observe(collections,{childList:true,subtree:true});
     if(movies)observer.observe(movies,{childList:true,subtree:true});
+    if(recent)observer.observe(recent,{childList:true,subtree:true});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot); else boot();
 })();
