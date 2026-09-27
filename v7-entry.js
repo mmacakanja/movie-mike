@@ -6,7 +6,7 @@
   document.head.appendChild(css);
 
   const core=document.createElement('script');
-  core.src='/app-core.js?v=6.3-core';
+  core.src='/app-core.js?v=7.1-metadata';
   core.onload=()=>{
     const v7=document.createElement('script');
     v7.src='/v7.js?v=7.0.0';

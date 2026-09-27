@@ -197,6 +197,32 @@ async function fetchMetadata(m) {
   }
 }
 
+async function loadCachedMetadata() {
+  try {
+    const r = await fetch('/api/metadata-summary');
+    if (!r.ok) return;
+    const d = await r.json();
+    const cacheKeyFor = m => {
+      const title = TITLE_ALIASES[m.title] || m.title;
+      const normalized = String(title).toLowerCase().normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+      return `${normalized}|${YEAR_HINTS[m.title] || ''}`;
+    };
+    const moviesByKey = new Map(MOVIES.map(m => [cacheKeyFor(m), m]));
+    for (const row of d.movies || []) {
+      const movie = moviesByKey.get(row.key);
+      if (movie && !metadata.has(movie.title)) {
+        metadata.set(movie.title, row.payload);
+        loadedMetadata++;
+      }
+    }
+    updateMetadataStatus();
+    renderVisuals();
+    populateGenreFilter();
+    renderGenreStats();
+  } catch (e) { /* Individual lookups remain available when the bulk cache is down. */ }
+}
+
 async function fetchCritic(m) {
   if (criticData.has(m.title) || !criticEnabled) return criticData.get(m.title);
   const md = mdata(m);
@@ -623,7 +649,7 @@ document.getElementById('loadMore').onclick = () => {
   await fetchSheetMovies();
   renderAll();
   loadNewestComments();
-  await loadCachedCritics();
+  await Promise.all([loadCachedMetadata(), loadCachedCritics()]);
   const telluridePriority = tellurideEntries().map(x => x.movie).filter(Boolean);
   const priority = [...telluridePriority, ...pantheon(), ...recent(), ...MOVIES.slice(0, 80)].filter((m, i, a) => a.findIndex(x => x.title === m.title) === i);
   await enrichBatch(priority);
