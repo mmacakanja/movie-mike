@@ -16,6 +16,7 @@
   ],
   "routes": [
     { "src": "/api/tmdb", "dest": "/api/tmdb.js" },
+    { "src": "/api/metadata-summary", "dest": "/api/metadata-summary.js" },
     { "src": "/api/critic", "dest": "/api/critic.js" },
     { "src": "/api/critic-summary", "dest": "/api/critic-summary.js" },
     { "src": "/api/comments", "dest": "/api/comments.js" },
