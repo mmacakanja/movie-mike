@@ -491,6 +491,7 @@ async function openMovie(m) {
   document.getElementById('dialogContent').innerHTML = `<div class="dialog-layout"><div class="dialog-poster">${posterHtml(m)}</div><div class="dialog-main"><span class="eyebrow">MOVIE MIKE RATING</span><div class="score-comparison"><div><span>MIKE</span><strong style="color:${scoreColor(m.score)}">${fmt(m.score)}</strong><small>/ 7-ish</small></div><div><span>METACRITIC</span><strong id="criticScore">${critic?.metacritic ?? '—'}</strong><small>/ 100</small></div></div><h2>${esc(m.title)}</h2>${detail}<div class="detail-scores">${keys.map(k => `<div class="detail-row"><span>${labels[k]}</span><div class="detail-track"><i style="width:${Math.min(m[k], 7) / 7 * 100}%;background:${ratingColor(m[k])}"></i></div>${ratingBadge(m[k], 'detail-badge')}</div>`).join('')}</div><section class="comments"><h3>Comments</h3><div id="commentsList"></div><form id="commentForm" class="comment-form"><input name="name" maxlength="60" placeholder="Your name" required><textarea name="body" maxlength="800" placeholder="Your comment" required></textarea><button class="button primary" type="submit">Post comment</button></form></section></div></div>`;
 
   dialog.showModal();
+  movieAnalytics('movie_opened', { movie: String(m.title).slice(0, 100) });
   loadComments(m.title);
 
   document.getElementById('commentForm').onsubmit = async e => {
@@ -588,6 +589,7 @@ document.addEventListener('click', e => {
   const genre = e.target.closest('[data-genre]');
   if (genre) {
     const value = decodeURIComponent(genre.dataset.genre);
+    movieAnalytics('genre_selected', { genre: value.slice(0, 80) });
     document.getElementById('genreFilter').value = value;
     document.getElementById('searchInput').value = '';
     visible = 56;
@@ -632,3 +634,36 @@ document.getElementById('loadMore').onclick = () => {
     await enrichCritics(MOVIES);
   }, 800);
 })();
+
+
+// Privacy-conscious Vercel Web Analytics custom events. No visitor identifiers or search text.
+function movieAnalytics(name, properties = {}) {
+  if (typeof window.va === 'function') {
+    try { window.va('event', { name, data: properties }); } catch (_) { /* analytics must never affect the site */ }
+  }
+}
+function trackSearch() {
+  const query = document.getElementById('searchInput')?.value.trim() || '';
+  if (query) movieAnalytics('movie_search', { source: 'movie_index' });
+}
+let searchAnalyticsTimer;
+document.getElementById('searchInput').addEventListener('input', () => {
+  clearTimeout(searchAnalyticsTimer);
+  searchAnalyticsTimer = setTimeout(trackSearch, 1200);
+});
+document.getElementById('topSearchForm').addEventListener('submit', () => movieAnalytics('movie_search', { source: 'top_search' }));
+document.getElementById('genreFilter').addEventListener('change', e => {
+  if (e.target.value !== 'all') movieAnalytics('genre_selected', { genre: e.target.value.slice(0, 80) });
+});
+if ('IntersectionObserver' in window) {
+  const column = document.getElementById('columnist');
+  if (column) {
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        movieAnalytics('guest_column_viewed');
+        observer.disconnect();
+      }
+    }, { threshold: 0.35 });
+    observer.observe(column);
+  }
+}
