@@ -35,9 +35,9 @@
     box.innerHTML=`<div class="v7-whats-new-inner">
       <div class="v7-featured-column">
         <div class="v7-kicker"><span class="v7-pulse"></span>What’s new at Movie Mike</div>
-        <h2>${c.published?`Bella takes the wheel: <em>${esc(c.title||'Guest column')}</em>`:'Fresh movies, fresh arguments.'}</h2>
+        <h2>${c.published?`Bella returns: <em>${esc(c.title||'Guest column')}</em>`:'Fresh movies, fresh arguments.'}</h2>
         <span class="v7-byline">${c.published?esc([c.author,c.date].filter(Boolean).join(' · ')):'MOVIE MIKE UPDATE'}</span>
-        <p>${c.published?'The guest chair is occupied—and apparently the spreadsheet is now under ideological attack. Read Bella Macakanja’s inaugural column, then decide whether Mike gets his website back.':'A quick guide to the latest additions and changes.'}</p>
+        <p>${c.published?'Bella returns with a month’s worth of movies, five-star verdicts, and absolutely no respect for the seven-point system.':'A quick guide to the latest additions and changes.'}</p>
         ${c.published?'<a class="v7-button" href="#columnist">Read the guest column →</a>':''}
       </div>
       <div class="v7-update-list">
