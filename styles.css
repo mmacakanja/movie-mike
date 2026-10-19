@@ -120,3 +120,33 @@ nav{gap:25px}nav a{font-size:14px;font-weight:700;color:#d9dee3;padding:10px 2px
 .bella-star.empty{color:#46505c}
 .bella-star.half{background:linear-gradient(to right,#efb64d 50%,#46505c 50%);background-clip:text;-webkit-background-clip:text;color:transparent}
 @media(max-width:780px){.columnist-section .columnist-card{grid-template-columns:1fr}}
+
+/* Guest columns: full-width desktop article, including archived issues.
+   Override the legacy sidebar grid at every desktop breakpoint. */
+@media (min-width:781px){
+  #columnist.columnist-section{max-width:1440px;width:100%}
+  #columnist .columnist-card,
+  #columnist.columnist-section .columnist-card{
+    display:block;
+    width:100%;
+    max-width:none;
+    padding:clamp(30px,4vw,60px);
+  }
+  #columnist .columnist-card > div:first-child{
+    width:100%;
+    max-width:1100px;
+    margin-bottom:26px;
+  }
+  #columnist .columnist-body{
+    display:block;
+    width:100%;
+    max-width:1100px;
+    margin:0;
+    font-size:18px;
+    line-height:1.8;
+  }
+  #columnist .columnist-body p{max-width:1100px}
+  #columnist .bella-review-list{width:100%;max-width:1100px}
+  #columnist .column-archive,
+  #columnist #columnArchive{width:100%;max-width:none}
+}
