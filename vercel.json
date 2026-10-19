@@ -49,6 +49,10 @@
     {
       "src": "analytics.js",
       "use": "@vercel/static"
+    },
+    {
+      "src": "guest-columns.js",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
