@@ -106,3 +106,17 @@ nav{gap:25px}nav a{font-size:14px;font-weight:700;color:#d9dee3;padding:10px 2px
 @media(max-width:1180px){.site-header nav{gap:9px}.site-header nav a{font-size:11px}.header-search-form{flex-basis:155px}}
 @media(max-width:980px){.site-header{flex-wrap:wrap;height:auto;min-height:64px;padding:10px 18px}.site-header nav{order:3;width:100%;overflow-x:auto;white-space:nowrap;margin:0;padding-bottom:3px}.header-search-form{margin-left:auto;flex-basis:min(260px,48vw)}}
 @media(max-width:780px){.columnist-card{grid-template-columns:1fr;gap:18px;padding:24px}.columnist-body p{max-width:none}}
+
+/* Guest column Issue 2: broad desktop reading area and true half-star visuals */
+.columnist-section .columnist-card{grid-template-columns:minmax(160px,220px) minmax(0,1fr);align-items:start}
+.columnist-section .columnist-body{width:100%;max-width:none}
+.bella-review-list{display:grid;gap:0;margin:32px 0;border-top:1px solid #35404b}
+.bella-review{padding:18px 0;border-bottom:1px solid #35404b}
+.bella-review-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 18px}
+.bella-review-head strong{font-family:"Playfair Display",serif;font-size:clamp(18px,1.6vw,22px);color:#f5f0e8}
+.bella-review p{margin:8px 0 0;line-height:1.7}
+.bella-stars{display:inline-flex;gap:3px;white-space:nowrap;font-family:Arial,sans-serif;font-size:23px;line-height:1;letter-spacing:-1px}
+.bella-star.full{color:#efb64d}
+.bella-star.empty{color:#46505c}
+.bella-star.half{background:linear-gradient(to right,#efb64d 50%,#46505c 50%);background-clip:text;-webkit-background-clip:text;color:transparent}
+@media(max-width:780px){.columnist-section .columnist-card{grid-template-columns:1fr}}
